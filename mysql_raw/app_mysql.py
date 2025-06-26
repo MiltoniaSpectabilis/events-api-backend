@@ -23,6 +23,7 @@ mysql = MySQL(app)
 
 @app.route("/", strict_slashes=False)
 def index():
+    """Tests database connection"""
     try:
         cursor = mysql.connection.cursor()
         cursor.execute("SELECT DATABASE();")
@@ -35,6 +36,7 @@ def index():
 
 @app.route("/events", methods=['POST'], strict_slashes=False)
 def create_event():
+    """Creates event"""
     try:
         data = request.get_json()
         if not data:
@@ -87,6 +89,7 @@ def create_event():
 
 @app.route("/events", methods=['GET'], strict_slashes=False)
 def get_all_events():
+    """Gets all events"""
     try:
         cursor = mysql.connection.cursor()
         cursor.execute("SELECT * FROM events")
@@ -99,6 +102,7 @@ def get_all_events():
 
 @app.route("/events/<int:event_id>", methods=['GET'], strict_slashes=False)
 def get_single_event(event_id):
+    """Gets single event"""
     try:
         cursor = mysql.connection.cursor()
         select_query = "SELECT * FROM events WHERE id = %s"
@@ -117,6 +121,7 @@ def get_single_event(event_id):
 
 @app.route("/events/<int:event_id>", methods=['PUT'], strict_slashes=False)
 def update_event(event_id):
+    """Updates event"""
     try:
         # check if event exists
         cursor = mysql.connection.cursor()
@@ -171,6 +176,7 @@ def update_event(event_id):
 
 @app.route("/events/<int:event_id>", methods=['DELETE'], strict_slashes=False)
 def delete_event(event_id):
+    """Deletes event"""
     try:
         # we should always check if the event exists first
         cursor = mysql.connection.cursor()
